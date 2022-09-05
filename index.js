@@ -89,7 +89,7 @@ app.post("/book/:id", (req, res) => {
 app.delete("/book/:id", (req, res) => {
   try {
     const id = Number(req.params.id);
-    let bookIDX = books.findIndex((book) => book.id === id);
+    const bookIDX = books.findIndex((book) => book.id === id);
     console.log(bookIDX);
     if (bookIDX < 0) {
       return res.status(404).json({
