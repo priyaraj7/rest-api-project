@@ -11,10 +11,12 @@ app.use(express.json());
 // parse URL encoded data
 app.use(express.urlencoded({ extended: true }));
 
+// Configuring cors middleware
 app.use(cors());
 
-// to let the server know wh
+// to let the server know what directory are we working on
 const __dirname = path.resolve();
+
 app.use(express.static("client"));
 
 // api/books
@@ -41,7 +43,7 @@ app.post("/book", (req, res) => {
 // Retrieving a Book by id
 app.get("/book/:id", (req, res) => {
   try {
-    const id = parseInt(req.params.id);
+    const id = Number(req.params.id);
     //  console.log(id);
     const book = books.find((book) => book.id === id);
     console.log(book);
@@ -62,8 +64,8 @@ app.get("/book/:id", (req, res) => {
 // Editing Books
 app.post("/book/:id", (req, res) => {
   try {
-    const id = parseInt(req.params.id);
-    console.log(id);
+    const id = Number(req.params.id);
+    // console.log(id);
     const book = books.find((book) => book.id === id);
     console.log(book);
     if (!book) {
@@ -72,10 +74,8 @@ app.post("/book/:id", (req, res) => {
       });
     }
     const bookIDX = books.indexOf(book);
-    books[bookIDX].title = req.body.title || books[bookIDX].title;
-    books[bookIDX].author = req.body.author || books[bookIDX].author;
-    books[bookIDX].format = req.body.format || books[bookIDX].format;
-    books[bookIDX].isbn = req.body.isbn || books[bookIDX].isbn;
+
+    books[bookIDX] = { ...book, ...req.body };
 
     res.redirect("/");
   } catch (error) {
@@ -98,7 +98,7 @@ app.delete("/book/:id", (req, res) => {
     }
     books.splice(bookIDX, 1);
     res.status(200).json({
-      message: "Successfully deleted book",
+      message: "Book was successfully deleted from my library",
       books,
     });
   } catch (error) {

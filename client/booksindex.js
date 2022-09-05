@@ -1,11 +1,11 @@
-let book;
-
+//let book;
+// UPDATE METHOD
 const updateBook = async (id) => {
   const response = await fetch(`http://localhost:8080/book/${id}`);
 
   const book = await response.json();
 
-  console.log(book);
+  //console.log(book);
 
   const { title, author, isbn, format } = book;
 
@@ -19,25 +19,27 @@ const updateBook = async (id) => {
   document.getElementById("form").action = `http://localhost:8080/book/${id}`;
 };
 
+// DELETE METHOD
 const deleteBook = async (id) => {
   const response = await fetch(`http://localhost:8080/book/${id}`, {
     method: "DELETE",
   });
 
   const data = await response.json();
-  alert(`Book was deleted from my library`);
-
-  // Reloading the page
-  location.reload();
+  alert(data.message);
+  if (response.ok) {
+    // Reloading the page
+    location.reload();
+  }
 };
 
 // GET Method
-async function showBooks() {
+const showBooks = async () => {
   const URL = "http://localhost:8080/api/books";
   const response = await fetch(URL);
   const responseBooks = await response.json();
 
-  console.log(responseBooks);
+  //console.log(responseBooks);
   for (let book of responseBooks) {
     const card = `<div class="col-4">
         <div class="card">
@@ -62,6 +64,6 @@ async function showBooks() {
     document.getElementById("books").innerHTML =
       document.getElementById("books").innerHTML + card;
   }
-}
+};
 
 showBooks();
