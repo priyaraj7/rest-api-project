@@ -64,7 +64,7 @@ app.post("/book/:id", (req, res) => {
   try {
     const id = parseInt(req.params.id);
     console.log(id);
-    let book = books.find((book) => book.id === id);
+    const book = books.find((book) => book.id === id);
     console.log(book);
     if (!book) {
       return res.status(404).json({
