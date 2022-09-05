@@ -7,6 +7,7 @@ A RESTful API is an Application Programming Interface (API) that uses HTTP verbs
 - Clone this project
 - Move inside the directory
 - Install all the packages using the command `npm install`
+- Start the server using the command `npm run sever`
 - Navigate to `http://localhost:8080/` on your local browser.
 
 ## Usecase
